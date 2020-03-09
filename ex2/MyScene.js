@@ -21,21 +21,12 @@ class MyScene extends CGFscene {
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.diamond = new MyDiamond(this);
-        this.triangle= new MyTriangle(this);
-        this.parallelogram=new MyParallelogram(this);
-        this.triangleSmall=new MyTriangleSmall(this);
-        this.triangleBig=new MyTriangleBig(this);
-        this.newDiamond = new MyNewDiamond(this);
+        this.tangram = new MyTangram(this);
+        this.unitCube = new MyUnitCube(this);
+
 
         //Objects connected to MyInterface
         this.displayAxis = true;
-        this.displayDiamond = false;
-        this.displayTriangle = false;
-        this.displayParallelogram=false;
-        this.displayTriangleSmall= false;
-        this.displayTriangleBig= false;
-        this.displayNewDiamond=true;
         this.scaleFactor = 1;
     }
     initLights() {
@@ -69,8 +60,6 @@ class MyScene extends CGFscene {
         if (this.displayAxis)
             this.axis.display();
 
-
-
         this.setDefaultAppearance();
 
         var sca = [this.scaleFactor, 0.0, 0.0, 0.0,
@@ -80,90 +69,18 @@ class MyScene extends CGFscene {
 
         this.multMatrix(sca);
 
+        this.translate(6, 0, 6);
+        this.rotate(-Math.PI / 2, 1, 0, 0);
         // ---- BEGIN Primitive drawing section
 
-        //this.diamond.display();
-        //this.triangle.display();
-        //this.parallelogram.display();
+        //
         this.pushMatrix();
-        if (this.displayTriangle)
-          {
-             this.rotate(-Math.PI+Math.PI/4,0,0,1);
-             this.rotate(Math.PI/2,0,0,1);
-             this.triangle.display();
-          }
+        this.translate(0,0,-0.2);
+        this.scale(12,12,0.1);
+        this.unitCube.display();
         this.popMatrix();
-
-
-
-        this.pushMatrix();
-        if(this.displayParallelogram){
-          this.translate(0,Math.sqrt(8)/2,0);
-          this.rotate(Math.PI,1,0,0);
-          this.rotate(Math.PI/4,0,0,1)
-          this.parallelogram.display();
-          }
-        this.popMatrix()
-
-          this.pushMatrix();
-          if(this.displayTriangleBig){
-            this.translate(0,Math.sqrt(8)/2,0);
-
-            this.rotate(Math.PI/4,0,0,1);
-            this.triangleBig.display();
-           }
-
-          this.popMatrix()
-
-
-          this.pushMatrix();
-          if(this.displayTriangleBig){
-            this.translate(0,Math.sqrt(8)+Math.sqrt(8)/2,0);
-
-            this.rotate(-3*Math.PI/4,0,0,1);
-            this.triangleBig.display();
-           }
-
-          this.popMatrix()
-
-          this.pushMatrix();
-          if (this.displayDiamond)
-            {
-              //this.translate(Math.sqrt(6-4*Math.sqrt(2)*Math.cos(45))+Math.sqrt(2)/2,2*Math.sqrt(8),0);
-
-              this.translate(Math.sqrt(2)+Math.sqrt(2)/2,2*Math.sqrt(8)+Math.sqrt(2)/4,0);
-
-            this.rotate(Math.PI/4,0,0,1);
-              this.diamond.display();
-            }
-          this.popMatrix();
-
-
-                    //pé esquerdo
-                    this.pushMatrix();
-                    if (this.displayTriangleSmall)
-                      {
-                        this.translate(Math.sqrt(2)/4,-Math.sqrt(8)/2-Math.sqrt(2)/4,0);
-
-                      this.rotate(3*Math.PI/4,0,0,1);
-
-                      //this.rotate(Math.PI,1,0,0);
-
-                      this.triangleSmall.display();
-                      }
-                    this.popMatrix();
-
-                    //pé direito
-                    this.pushMatrix();
-                    if (this.displayTriangleSmall)
-                    {
-                      //this.translate(Math.sqrt(2)/4+Math.sqrt(2),-Math.sqrt(8)/2-Math.sqrt(2)/4,0);
-                      this.translate(Math.sqrt(3)+Math.sqrt(2)/4,-Math.sqrt(8)/2-Math.sqrt(2)/4,0);
-                      this.rotate(3*Math.PI/4,0,0,1);
-                      //this.rotate(Math.PI,1,0,0);
-                      this.triangleSmall.display();
-                    }
-                    this.popMatrix();
+        //
+        this.tangram.display();
 
         // ---- END Primitive drawing section
     }
