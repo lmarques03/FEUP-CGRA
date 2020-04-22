@@ -1,3 +1,4 @@
+
 /**
  * MyDiamond
  * @constructor
@@ -8,6 +9,7 @@ class MyUnitCube extends CGFobject {
 		super(scene);
 		this.initBuffers();
 		this.initMaterials();
+
 	}
 	initBuffers() {
 		 this.vertices = [
@@ -68,13 +70,7 @@ class MyUnitCube extends CGFobject {
             0, -1, 0,
             0, -1, 0,
 
-            // Bottom face
-				            // 0, -1, 0,
-				            // 0, -1, 0,
-				            // 0, -1, 0,
-				            // 0, -1, 0,
-										// Bottom face
-
+						// Bottom face
 						0, 1, 0,
 						0, 1, 0,
 						0, 1, 0,
@@ -109,17 +105,18 @@ class MyUnitCube extends CGFobject {
 						];
 
 							this.texCoords =([
-					            // Front face
-											3/4, 2/3,
-											3/4, 1/3,
-											1.0, 1/3,
-											1.0, 2/3,
 
-					            // Back face
-											3/4, 2/3,
-											3/4, 1/3,
-											1.0, 1/3,
-											1.0, 2/3,
+					      			// Front face
+											3/4+0.01, 2/3,
+											3/4+0.01, 1/3,
+											1.0+0.01, 1/3,
+											1.0+0.01, 2/3,
+
+											// Back face
+											1/4, 2/3,
+											1/4, 1/3,
+											2/4, 1/3,
+											2/4, 2/3,
 
 											// Top face
 											1.0, 2/3,
@@ -140,15 +137,12 @@ class MyUnitCube extends CGFobject {
 											1.0, 1/3,
 
 											// Left face
-											// 1/4, 2/3,
-											// 1/4, 1/3,
-											// 2/4, 1/3,
-											// 2/4, 2/3,
+											1/3, 2/3,
+											0.0, 2/3,
+											0.0, 1/3,
+											1/3, 1/3,
 
-											3/4, 2/3,
-											3/4, 1/3,
-											1.0, 1/3,
-											1.0, 2/3,
+
 
 					        ]);
 
@@ -163,7 +157,7 @@ class MyUnitCube extends CGFobject {
 	initMaterials() {
 
 		this.appearance = new CGFappearance(this.scene);
-		this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
+			this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
 		this.appearance.setDiffuse(0.7, 0.7, 0.7, 1);
 		this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
 		this.appearance.setShininess(120);
@@ -172,5 +166,7 @@ class MyUnitCube extends CGFobject {
 
 
 			}
+
+
 
 }
