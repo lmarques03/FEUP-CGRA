@@ -24,16 +24,29 @@ class MyScene extends CGFscene {
 
         this.setUpdatePeriod(50);
 
+
         this.enableTextures(true);
         this.appearance = new CGFappearance(this);
         this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
         this.appearance.setDiffuse(0.7, 0.7, 0.7, 1);
         this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
         this.appearance.setShininess(120);
+        this.appearance.loadTexture('./images/cubemap.png');
+        this.appearance.setTextureWrap('REPEAT','REPEAT');
 
-        this.texture = new CGFtexture(this, "./images/earth.jpg");
-        this.appearance.setTexture(this.texture);
-        this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.textures=[
+            new CGFtexture(this, './images/earth.jpg'),
+            new CGFtexture(this, './images/cubemap.png'),
+
+        ];
+
+        this.textureList= {
+            'None': -1,
+            'Earth': 0,
+            'CubeMap': 1,
+        };
+
+
 
         //this.appearanceUnitCube = new MyUnitCube(this);
         // this.appearanceUnitCube = new CGFappearance(this);
@@ -49,11 +62,28 @@ class MyScene extends CGFscene {
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.incompleteSphere = new MySphere(this, 16, 8);
-        this.myCylinder=new MyCylinder(this,6);
-        this.myUnitCube=new MyUnitCube(this);
+        this.vehicle = new MyVehicle(this, 16, 20);
+        this.box = new MyUnitCube(this);
+        this.objects=[
+            new MySphere(this, 16, 8),
+            new MyCylinder(this,6),
+
+        ];
+
+        this.objectList = {
+			      'Sphere': 0,
+            'Cylinder': 1,
+        };
+
         //Objects connected to MyInterface
         this.displayAxis = true;
+        this.displayVehicle = true;
+        this.displayObjects = false;
+        this.displayBox = true;
+        this.currentObject = 0;
+        this.currentTexture = 1;
+        this.speedFactor = 1;
+        this.scaleFactor = 1;
 
     }
 
@@ -67,7 +97,7 @@ class MyScene extends CGFscene {
 
 
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
     }
 
 
@@ -78,12 +108,64 @@ class MyScene extends CGFscene {
         this.setShininess(10.0);
     }
 
+    checkKeys(){
+       this.vehicle.update();
+       var text="Keys pressed: ";
+       var keysPressed=false;
+
+       //check for key codes
+       if(this.gui.isKeyPressed("KeyW")){
+           text +="W";
+           this.vehicle.accelerate(0.2*this.speedFactor);
+           keysPressed = true;
+       }
+       if(this.gui.isKeyPressed("KeyS")){
+           text +="S";
+           this.vehicle.accelerate(-0.2*this.speedFactor);
+           keysPressed = true;
+       }
+       if(this.gui.isKeyPressed("KeyA")){
+           text +="A";
+           this.vehicle.turn(5);
+           keysPressed = true;
+       }
+       if(this.gui.isKeyPressed("KeyD")){
+           text +="D";
+           this.vehicle.turn(-5);
+           keysPressed = true;
+       }
+       if(this.gui.isKeyPressed("KeyR")){
+           text +="R";
+           this.vehicle.reset();
+           keysPressed = true;
+       }
+       if(keysPressed){
+           console.log(text);
+           this.vehicle.update();
+       }
+
+   }
+
 
 
 
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
         //To be done...
+        this.checkKeys();
+    }
+
+    selectedObject() {
+		    this.objects[this.currentObject];
+    }
+
+    selectedTexture() {
+
+          this.appearance.setTexture(this.textures[this.currentTexture]);
+
+
+
+
     }
 
     display() {
@@ -102,18 +184,33 @@ class MyScene extends CGFscene {
         if (this.displayAxis)
             this.axis.display();
 
+        if(this.currentTexture != -1)
+          this.appearance.apply();
+
         //this.setDefaultAppearance();
+
+        if(this.displayObjects)
+            this.objects[this.currentObject].display();
+
+
+        if(this.displayVehicle){
+            this.pushMatrix();
+            this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
+            this.vehicle.display();
+            this.popMatrix();
+        }
+
+        if(this.displayBox){
+          this.scale(50,50,50);
+          this.box.display();
+        }
 
 
         // ---- BEGIN Primitive drawing section
 
         //This sphere does not have defined texture coordinates
         //this.incompleteSphere.display();
-        this.pushMatrix();
-        this.scale(5, 5, 5);
-        this.myUnitCube.appearance.apply();
-        this.myUnitCube.display();
-        this.popMatrix();
+
 
 
         //this.myCylinder.display();

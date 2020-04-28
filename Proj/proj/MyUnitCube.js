@@ -8,7 +8,6 @@ class MyUnitCube extends CGFobject {
 	constructor(scene) {
 		super(scene);
 		this.initBuffers();
-		this.initMaterials();
 
 	}
 	initBuffers() {
@@ -142,10 +141,7 @@ class MyUnitCube extends CGFobject {
 											0.0, 1/3,
 											1/3, 1/3,
 
-
-
 					        ]);
-
 
 
 		//The defined indices (and corresponding vertices)
@@ -154,18 +150,24 @@ class MyUnitCube extends CGFobject {
 
 		this.initGLBuffers();
 	}
-	initMaterials() {
 
-		this.appearance = new CGFappearance(this.scene);
-			this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
-		this.appearance.setDiffuse(0.7, 0.7, 0.7, 1);
-		this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
-		this.appearance.setShininess(120);
-		this.appearance.loadTexture( "./images/cubemap.png");
-		this.appearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+	updateTexture(){
+
+					this.appearance = new CGFappearance(this.scene);
+					this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
+					this.appearance.setDiffuse(0.7, 0.7, 0.7, 1);
+					this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
+					this.appearance.setShininess(120);
+					this.appearance.loadTexture( "./images/cubemap.png");
+					this.appearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+        
+
+}
 
 
-			}
+
+
+
 
 
 
