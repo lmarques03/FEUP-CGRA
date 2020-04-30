@@ -1,10 +1,11 @@
-class MySphere extends CGFobject {
+class MyVehicleMotor extends CGFobject {
   /**
    * @method constructor
    * @param  {CGFscene} scene - MyScene object
    * @param  {integer} slices - number of slices around Y axis
    * @param  {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
    */
+
   constructor(scene, slices, stacks) {
     super(scene);
     this.latDivs = stacks * 2;
@@ -13,7 +14,11 @@ class MySphere extends CGFobject {
     this.initBuffers();
   }
 
-
+  /**
+   * @method initBuffers
+   * Initializes the sphere buffers
+   * TODO: DEFINE TEXTURE COORDINATES
+   */
   initBuffers() {
     this.vertices = [];
     this.indices = [];
@@ -22,13 +27,9 @@ class MySphere extends CGFobject {
 
     var phi = 0;
     var theta = 0;
-    var phiInc = Math.PI / this.latDivs;
-    var thetaInc = (2*(Math.PI) / this.longDivs);
+    var phiInc = (2*Math.PI) / this.latDivs;
+    var thetaInc = ((Math.PI) / this.longDivs);
     var latVertices = this.longDivs + 1;
-    var lengthS = 1 / this.longDivs;
-    var lengthT = 1 / this.latDivs;
-    var sCoord =1;
-    var tCoord = 1;
 
     // build an all-around stack at a time, starting on "north pole" and proceeding "south"
     for (let latitude = 0; latitude <= this.latDivs; latitude++) {
@@ -36,13 +37,13 @@ class MySphere extends CGFobject {
       var cosPhi = Math.cos(phi);
 
       // in each stack, build all the slices around, starting on longitude 0
-      theta = 0;
+      theta =  0;
 
       for (let longitude = 0; longitude <= this.longDivs; longitude++) {
         //--- Vertices coordinates
-        var x = Math.cos(theta) * sinPhi;
+        var x = Math.cos(theta) * sinPhi*2;
         var y = cosPhi;
-        var z = Math.sin(-theta) * sinPhi;
+        var z = Math.sin(-theta) * sinPhi/2;
         this.vertices.push(x, y, z);
 
         //--- Indices
@@ -68,15 +69,22 @@ class MySphere extends CGFobject {
         this.normals.push(x, y, z);
         theta += thetaInc;
 
+        //--- Texture Coordinates
+        // To be done...
+        // May need some additional code also in the beginning of the function.
 
-        tCoord -= lengthS;
-        this.texCoords.push((1- tCoord),(1-sCoord));
+        //
+        // var s = 1 / this.longDivs;
+        // var t = 1 / (this.latDivs);
+        // this.texCoords.push(s);
+        // this.texCoords.push(t);
+        this.texCoords.push(1);
+        this.texCoords.push(0);
 
           }
-          tCoord = 1;
-          sCoord -= lengthT;
 
-          phi += phiInc;
+
+      phi += phiInc;
 
     }
 

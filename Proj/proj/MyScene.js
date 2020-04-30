@@ -47,19 +47,6 @@ class MyScene extends CGFscene {
         };
 
 
-
-        //this.appearanceUnitCube = new MyUnitCube(this);
-        // this.appearanceUnitCube = new CGFappearance(this);
-        // this.appearanceUnitCube.setAmbient(0.3, 0.3, 0.3, 1);
-        // this.appearanceUnitCube.setDiffuse(0.7, 0.7, 0.7, 1);
-        // this.appearanceUnitCube.setSpecular(0.0, 0.0, 0.0, 1);
-        // this.appearanceUnitCube.setShininess(120);
-        //
-        // this.textureUnitCube = new CGFtexture(this, "./images/cubemap.png");
-        // this.appearanceUnitCube.setTexture(this.textureUnitCube);
-        // this.appearanceUnitCube.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-
-
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.vehicle = new MyVehicle(this, 16, 20);
@@ -81,7 +68,7 @@ class MyScene extends CGFscene {
         this.displayObjects = false;
         this.displayBox = true;
         this.currentObject = 0;
-        this.currentTexture = 1;
+        this.currentTexture = -1;
         this.speedFactor = 1;
         this.scaleFactor = 1;
 
@@ -189,9 +176,10 @@ class MyScene extends CGFscene {
 
         //this.setDefaultAppearance();
 
-        if(this.displayObjects)
+        if(this.displayObjects){
+            this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
             this.objects[this.currentObject].display();
-
+          }
 
         if(this.displayVehicle){
             this.pushMatrix();

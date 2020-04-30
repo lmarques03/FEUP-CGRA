@@ -6,6 +6,21 @@ class MyVehicle extends CGFobject {
         this.sphere = new MySphere(this.scene, 16, 8);
 
         this.initBuffers();
+        this.initTextures();
+
+        // MyVehicle elements
+        this.myVehicleCorpo=new MyVehicleCorpo(scene,16,8);
+        this.myVehicleMotorR=new MyVehicleCorpo(scene,16,8);
+        this.myVehicleMotorL=new MyVehicleCorpo(scene,16,8);
+        this.myVehicleRudderTop=new MyVehicleRudder(scene);
+        this.myVehicleRudderBot=new MyVehicleRudder(scene);
+        this.myVehicleRudderL=new MyVehicleRudder(scene);
+        this.myVehicleRudderR=new MyVehicleRudder(scene);
+        this.myVehicleGondola=new MyVehicleGondola(scene);
+        this.myVehicleHelice_I=new MyVehicleHelice(scene,16,8);;
+        this.myVehicleHelice_II=new MyVehicleHelice(scene,16,8);;
+        this.myVehicleHelice_III=new MyVehicleHelice(scene,16,8);;
+        this.myVehicleHelice_IV=new MyVehicleHelice(scene,16,8);;
 
         this.angY=0;
         this.speed=0;
@@ -96,7 +111,46 @@ class MyVehicle extends CGFobject {
         this.speed=0;
     }
 
+    initTextures(){
+        this.appearanceCorpo = new CGFappearance(this.scene);
+        this.appearanceCorpo.setAmbient(1.0, 1.0, 1.0, 1);
+        this.appearanceCorpo.setDiffuse(1.0, 1.0, 1.0, 1);
+        this.appearanceCorpo.setSpecular(0.4, 0.4, 0.4, 1);
+        this.appearanceCorpo.setShininess(10);
+        this.textureCorpo=new CGFtexture(this.scene, "./images/gy3.jpg");;
+        this.appearanceCorpo.setTexture(this.textureCorpo);
+        this.appearanceCorpo.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.appearanceRuder = new CGFappearance(this.scene);
+        this.appearanceRuder.setAmbient(0.3, 0.3, 0.3, 1);
+        this.appearanceRuder.setDiffuse(0.7, 0.7, 0.7, 1);
+        this.appearanceRuder.setSpecular(0.0, 0.0, 0.0, 1);
+        this.appearanceRuder.setShininess(120);
+        this.appearanceRuder.loadTexture( "./images/Yellow.png");
+        this.appearanceRuder.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.appearanceGondola = new CGFappearance(this.scene);
+        this.appearanceGondola.setAmbient(0.3, 0.3, 0.3, 1);
+        this.appearanceGondola.setDiffuse(0.7, 0.7, 0.7, 1);
+        this.appearanceGondola.setSpecular(0.0, 0.0, 0.0, 1);
+        this.appearanceGondola.setShininess(120);
+        this.appearanceGondola.loadTexture( "./images/Blue.png");
+        this.appearanceGondola.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.appearanceHelice = new CGFappearance(this.scene);
+        this.appearanceHelice.setAmbient(0.3, 0.3, 0.3, 1);
+        this.appearanceHelice.setDiffuse(0.7, 0.7, 0.7, 1);
+        this.appearanceHelice.setSpecular(0.0, 0.0, 0.0, 1);
+        this.appearanceHelice.setShininess(120);
+        this.appearanceHelice.loadTexture( "./images/metal.jpeg");
+        this.appearanceHelice.setTextureWrap('REPEAT', 'REPEAT');
+
+}
+
+
+
     display(){
+
       this.scene.setAmbient(0.5, 0.5, 0.5, 1.0);
       this.scene.pushMatrix();
 
@@ -104,19 +158,108 @@ class MyVehicle extends CGFobject {
       this.scene.translate(this.x, this.y, this.z);
       this.scene.rotate(this.angY*Math.PI/180.0, 0, 1, 0);
 
-  
-
-      //super.display();//tipo override o display de scene
-
-      //Balao
-      this.scene.pushMatrix();
-       this.scene.scale(0.5,0.5,1);
-       this.sphere.display();
-       this.scene.popMatrix();
 
 
+this.scene.pushMatrix();
+    this.appearanceCorpo.apply();
+    this.scene.pushMatrix();
+    this.scene.scale(2,2,3);
+    this.myVehicleCorpo.display();
+    this.scene.popMatrix();
 
-      this.scene.popMatrix();
 
+    //translate all objects(exc corpo)
+    this.scene.pushMatrix();
+      this.scene.translate(0,0,0-1.5);
+    //
+        this.appearanceGondola.apply();
+        this.scene.pushMatrix();
+        this.scene.scale(0.25,0.25,0.4);
+        this.scene.translate(0,-8.7,-2);
+        this.scene.rotate(Math.PI/2,1,0,0);
+        this.myVehicleGondola.display();
+        this.scene.popMatrix();
+
+
+        this.scene.pushMatrix();
+        this.scene.translate(0.3,-2.25,-1);
+        this.scene.scale(0.2,0.1,0.2);
+        this.myVehicleMotorL.display();
+        this.scene.popMatrix();
+
+
+        this.scene.pushMatrix();
+        this.scene.translate(-0.3,-2.25,-1);
+        this.scene.scale(0.2,0.1,0.2);
+        this.myVehicleMotorR.display();
+        this.scene.popMatrix();
+
+        this.appearanceHelice.apply();
+        this.scene.pushMatrix();
+          this.scene.translate(-0.3,-2.25,-1.4);
+          this.scene.rotate(Math.PI/2,0,1,0);
+          this.scene.scale(0.15,0.15,0.15);
+            this.scene.pushMatrix();
+              this.scene.scale(1,0.4,1);
+              this.myVehicleHelice_I.display();
+            this.scene.popMatrix();
+              this.scene.pushMatrix();
+                this.scene.rotate(Math.PI/2,1,0,0);
+                this.scene.scale(1,0.4,1);
+                this.myVehicleHelice_II.display();
+              this.scene.popMatrix();
+        this.scene.popMatrix();
+
+
+
+        this.scene.pushMatrix();
+          this.scene.translate(+0.3,-2.25,-1.4);
+          this.scene.rotate(Math.PI/2,0,1,0);
+          this.scene.scale(0.15,0.15,0.15);
+            this.scene.pushMatrix();
+              this.scene.scale(1,0.4,1);
+              this.myVehicleHelice_III.display();
+            this.scene.popMatrix();
+              this.scene.pushMatrix();
+                this.scene.rotate(Math.PI/2,1,0,0);
+                this.scene.scale(1,0.4,1);
+                this.myVehicleHelice_IV.display();
+              this.scene.popMatrix();
+        this.scene.popMatrix();
+
+        this.appearanceRuder.apply();
+        this.scene.pushMatrix();
+          this.scene.scale(0.75,0.75,1);
+          this.scene.pushMatrix();
+            this.scene.translate(0,1.75,-2.75);
+            this.scene.rotate(Math.PI/2,1,0,0);
+            this.scene.rotate(Math.PI/2,0,1,0);
+            this.myVehicleRudderTop.display();
+          this.scene.popMatrix();
+          this.scene.pushMatrix();
+            this.scene.translate(0,-1.75,-2.75);
+            this.scene.rotate(Math.PI/2,1,0,0);
+            this.scene.rotate(Math.PI/2,0,1,0);
+            this.myVehicleRudderBot.display();
+          this.scene.popMatrix();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix()
+          this.scene.scale(0.75,0.75,1)
+          this.scene.pushMatrix();
+            this.scene.translate(1.5,0,-3);
+            this.scene.rotate(Math.PI/2,1,0,0);
+            this.myVehicleRudderR.display();
+          this.scene.popMatrix()
+          this.scene.pushMatrix();
+            this.scene.translate(-1.5,0,-3);
+            this.scene.rotate(Math.PI/2,1,0,0);
+            this.myVehicleRudderL.display();
+          this.scene.popMatrix()
+        this.scene.popMatrix();
+
+    this.scene.popMatrix();
+
+this.scene.popMatrix();
     }
 }

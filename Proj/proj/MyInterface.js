@@ -24,7 +24,7 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'currentObject', this.scene.objectList).name('Selected Object').onChange(this.scene.selectedObject.bind(this.scene));
         this.gui.add(this.scene, 'currentTexture', this.scene.textureList).name('Selected Texture').onChange(this.scene.selectedTexture.bind(this.scene));
         this.gui.add(this.scene, 'speedFactor',0.1,3.0,0.1).name("Speed");
-        this.gui.add(this.scene,'scaleFactor',0.5,3.0,0.1).name("Scale");
+        this.gui.add(this.scene,'scaleFactor',1,10.0,0.1).name("Scale");
         this.initKeys();
         return true;
     }

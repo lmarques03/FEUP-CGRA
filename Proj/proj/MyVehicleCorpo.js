@@ -1,4 +1,4 @@
-class MySphere extends CGFobject {
+class MyVehicleCorpo extends CGFobject {
   /**
    * @method constructor
    * @param  {CGFscene} scene - MyScene object
@@ -13,7 +13,11 @@ class MySphere extends CGFobject {
     this.initBuffers();
   }
 
-
+  /**
+   * @method initBuffers
+   * Initializes the sphere buffers
+   * TODO: DEFINE TEXTURE COORDINATES
+   */
   initBuffers() {
     this.vertices = [];
     this.indices = [];
@@ -23,11 +27,11 @@ class MySphere extends CGFobject {
     var phi = 0;
     var theta = 0;
     var phiInc = Math.PI / this.latDivs;
-    var thetaInc = (2*(Math.PI) / this.longDivs);
+    var thetaInc = (2 * Math.PI) / this.longDivs;
     var latVertices = this.longDivs + 1;
-    var lengthS = 1 / this.longDivs;
+    var lengthS = 1 / (this.longDivs);
     var lengthT = 1 / this.latDivs;
-    var sCoord =1;
+    var sCoord = 1;
     var tCoord = 1;
 
     // build an all-around stack at a time, starting on "north pole" and proceeding "south"
@@ -37,12 +41,11 @@ class MySphere extends CGFobject {
 
       // in each stack, build all the slices around, starting on longitude 0
       theta = 0;
-
       for (let longitude = 0; longitude <= this.longDivs; longitude++) {
         //--- Vertices coordinates
         var x = Math.cos(theta) * sinPhi;
         var y = cosPhi;
-        var z = Math.sin(-theta) * sinPhi;
+        var z = Math.sin(-theta) * sinPhi*2;
         this.vertices.push(x, y, z);
 
         //--- Indices
@@ -70,13 +73,15 @@ class MySphere extends CGFobject {
 
 
         tCoord -= lengthS;
-        this.texCoords.push((1- tCoord),(1-sCoord));
+        //this.texCoords.push((1- tCoord),(1-sCoord));
+        this.texCoords.push((1- tCoord+0.2),(1-sCoord));
 
           }
           tCoord = 1;
           sCoord -= lengthT;
 
           phi += phiInc;
+
 
     }
 

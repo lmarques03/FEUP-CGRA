@@ -52,8 +52,8 @@ class MyCylinder extends CGFobject {
                this.indices.push(2*i,(2*i+2),(2*i+3));
     }
 
-              this.texCoords.push(i/this.longDivs,1,
-                                  i/this.longDivs,0);
+              this.texCoords.push(1-i/this.longDivs,1,
+                                  1-i/this.longDivs,0);
 
 
   }

@@ -1,4 +1,4 @@
-class MySphere extends CGFobject {
+class MyHalfSphere extends CGFobject {
   /**
    * @method constructor
    * @param  {CGFscene} scene - MyScene object
@@ -13,7 +13,11 @@ class MySphere extends CGFobject {
     this.initBuffers();
   }
 
-
+  /**
+   * @method initBuffers
+   * Initializes the sphere buffers
+   * TODO: DEFINE TEXTURE COORDINATES
+   */
   initBuffers() {
     this.vertices = [];
     this.indices = [];
@@ -23,7 +27,7 @@ class MySphere extends CGFobject {
     var phi = 0;
     var theta = 0;
     var phiInc = Math.PI / this.latDivs;
-    var thetaInc = (2*(Math.PI) / this.longDivs);
+    var thetaInc = ( Math.PI) / this.longDivs;
     var latVertices = this.longDivs + 1;
     var lengthS = 1 / this.longDivs;
     var lengthT = 1 / this.latDivs;
@@ -80,6 +84,11 @@ class MySphere extends CGFobject {
 
     }
 
+
+    // this.pushMatrix();
+    // this.rotate(Math.PI/2,1,0,0);
+    // this.incompleteSphere.display();
+    // this.popMatrix();
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();

@@ -8,6 +8,7 @@ class MyUnitCube extends CGFobject {
 	constructor(scene) {
 		super(scene);
 		this.initBuffers();
+		this.initMaterials();
 
 	}
 	initBuffers() {
@@ -106,10 +107,10 @@ class MyUnitCube extends CGFobject {
 							this.texCoords =([
 
 					      			// Front face
-											3/4+0.01, 2/3,
-											3/4+0.01, 1/3,
-											1.0+0.01, 1/3,
-											1.0+0.01, 2/3,
+											3/4, 2/3,
+											3/4, 1/3,
+											1.0, 1/3,
+											1.0, 2/3,
 
 											// Back face
 											1/4, 2/3,
@@ -136,12 +137,15 @@ class MyUnitCube extends CGFobject {
 											1.0, 1/3,
 
 											// Left face
-											1/3, 2/3,
+											1/4, 2/3,
 											0.0, 2/3,
 											0.0, 1/3,
-											1/3, 1/3,
+											1/4, 1/3,
+
+
 
 					        ]);
+
 
 
 		//The defined indices (and corresponding vertices)
@@ -150,24 +154,18 @@ class MyUnitCube extends CGFobject {
 
 		this.initGLBuffers();
 	}
+	initMaterials() {
 
-	updateTexture(){
-
-					this.appearance = new CGFappearance(this.scene);
-					this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
-					this.appearance.setDiffuse(0.7, 0.7, 0.7, 1);
-					this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
-					this.appearance.setShininess(120);
-					this.appearance.loadTexture( "./images/cubemap.png");
-					this.appearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-        
-
-}
+		this.appearance = new CGFappearance(this.scene);
+		this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
+		this.appearance.setDiffuse(0.7, 0.7, 0.7, 1);
+		this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
+		this.appearance.setShininess(120);
+		this.appearance.loadTexture( "./images/cubemap.png");
+		this.appearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 
-
-
-
+			}
 
 
 
