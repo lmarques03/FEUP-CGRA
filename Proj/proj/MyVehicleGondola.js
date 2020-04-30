@@ -7,9 +7,9 @@ class MyVehicleGondola extends CGFobject {
     super(scene);
 
 
-    this.myCylinder=new MyCylinder(scene,16);
-    this.myTopHalfSphere=new MyHalfSphere(scene,16,8);
-    this.myBottompHalfSphere=new MyHalfSphere(scene,16,8);
+    this.myCylinder=new MyCylinder(scene,32);
+    this.myTopHalfSphere=new MyHalfSphere(scene,32,8);
+    this.myBottompHalfSphere=new MyHalfSphere(scene,32,8);
 
     this.initBuffers();
   }
