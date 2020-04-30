@@ -116,16 +116,16 @@ class MyVehicle extends CGFobject {
         this.appearanceCorpo.setAmbient(1.0, 1.0, 1.0, 1);
         this.appearanceCorpo.setDiffuse(1.0, 1.0, 1.0, 1);
         this.appearanceCorpo.setSpecular(0.4, 0.4, 0.4, 1);
-        this.appearanceCorpo.setShininess(10);
+        this.appearanceCorpo.setShininess(100);
         this.textureCorpo=new CGFtexture(this.scene, "./images/gy3.jpg");;
         this.appearanceCorpo.setTexture(this.textureCorpo);
         this.appearanceCorpo.setTextureWrap('REPEAT', 'REPEAT');
 
         this.appearanceRuder = new CGFappearance(this.scene);
-        this.appearanceRuder.setAmbient(0.3, 0.3, 0.3, 1);
-        this.appearanceRuder.setDiffuse(0.7, 0.7, 0.7, 1);
-        this.appearanceRuder.setSpecular(0.0, 0.0, 0.0, 1);
-        this.appearanceRuder.setShininess(120);
+        this.appearanceRuder.setAmbient(1.0, 1.0, 1.0, 1);
+        this.appearanceRuder.setDiffuse(1.0, 1.0, 1.7, 1);
+        this.appearanceRuder.setSpecular(0.4, 0.4, 0.4, 1);
+        this.appearanceRuder.setShininess(100);
         this.appearanceRuder.loadTexture( "./images/Yellow.png");
         this.appearanceRuder.setTextureWrap('REPEAT', 'REPEAT');
 
