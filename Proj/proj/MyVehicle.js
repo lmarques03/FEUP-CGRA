@@ -27,6 +27,20 @@ class MyVehicle extends CGFobject {
         this.x=0;
         this.y=0;
         this.z=0;
+        this.autoPilot = false;
+        this.helixAng = 0;
+        this.stabilizerAng = 0;
+
+
+        this.center_x = 0;
+        this.center_z = 0;
+
+        this.radius = 5;
+        this.pilotAngle = 0;
+
+        this.previousTime = 0; //ms
+      this.deltaTime = 0; //seconds
+      this.angularSpeed = 360/5.0 * (Math.PI / 180); // formula: 360/animationTime
     }
 
     initBuffers() {
@@ -82,9 +96,54 @@ class MyVehicle extends CGFobject {
         this.initGLBuffers();
     }
 
-    update(){
+    startAutoPilot(){
+
+       this.autoPilot = true;
+       this.pilotAngle = (this.angY - 90) * Math.PI / 180.0;
+       var perpendicularAngle = (this.angY + 90) * Math.PI / 180.0;
+       this.center_x = this.x + Math.sin(perpendicularAngle)*this.radius;
+       this.center_z = this.z + Math.cos(perpendicularAngle)*this.radius;
+   }
+
+    update(t){
+
+      if(this.previousTime == 0)
+            this.previousTime = t;
+
+        this.deltaTime = (t-this.previousTime)/1000;
+        this.previousTime = t;
+
+        var cos, sin;
+
+      if(this.autoPilot){
+
+            var deltaAngle = this.deltaTime * this.angularSpeed;
+
+            this.pilotAngle += deltaAngle;
+
+            sin = Math.sin(this.pilotAngle);
+            cos = Math.cos(this.pilotAngle);
+            this.angY = (this.pilotAngle * 180 / Math.PI) + 90;
+
+
+            this.x = this.radius * sin + this.center_x;
+            this.z = this.radius * cos + this.center_z;
+
+            this.stabilizerAng = (-5*4) * Math.PI /180.0;
+            this.helixAng = (5 * t) * Math.PI /180.0;
+        }
+
+        else{
+
         this.x += this.speed*Math.sin(this.angY*Math.PI/180.0);
         this.z += this.speed*Math.cos(this.angY*Math.PI/180.0);
+
+        this.helixAng = (this.speed * t) * Math.PI /180.0;
+
+        }
+
+
+
     }
 
     updateBuffers(complexity){
@@ -97,10 +156,11 @@ class MyVehicle extends CGFobject {
 
     turn(val){
         this.angY += val;
+        this.stabilizerAng = (-val) * 4 * Math.PI /180.0;
     }
 
     accelerate(val){
-        this.speed = val;
+        this.speed = this.speed + val;
     }
 
     reset(){
@@ -109,7 +169,11 @@ class MyVehicle extends CGFobject {
         this.z=0;
         this.angY=0;
         this.speed=0;
+        this.autoPilot = false;
+        this.stabilizerAng = 0;
     }
+
+
 
     initTextures(){
         this.appearanceCorpo = new CGFappearance(this.scene);
@@ -151,7 +215,7 @@ class MyVehicle extends CGFobject {
 
     display(){
 
-      this.scene.setAmbient(0.5, 0.5, 0.5, 1.0);
+  //    this.scene.setAmbient(0.5, 0.5, 0.5, 1.0);
       this.scene.pushMatrix();
 
       //orientar a posiçao do veiculo
@@ -194,18 +258,24 @@ this.scene.pushMatrix();
         this.myVehicleMotorR.display();
         this.scene.popMatrix();
 
+//HELICE
         this.appearanceHelice.apply();
+
         this.scene.pushMatrix();
           this.scene.translate(-0.3,-2.25,-1.4);
           this.scene.rotate(Math.PI/2,0,1,0);
           this.scene.scale(0.15,0.15,0.15);
+
             this.scene.pushMatrix();
               this.scene.scale(1,0.4,1);
+              this.scene.rotate(this.helixAng, 1,0,0);
               this.myVehicleHelice_I.display();
             this.scene.popMatrix();
+
               this.scene.pushMatrix();
                 this.scene.rotate(Math.PI/2,1,0,0);
                 this.scene.scale(1,0.4,1);
+                this.scene.rotate(this.helixAng, 1,0,0);
                 this.myVehicleHelice_II.display();
               this.scene.popMatrix();
         this.scene.popMatrix();
@@ -218,14 +288,20 @@ this.scene.pushMatrix();
           this.scene.scale(0.15,0.15,0.15);
             this.scene.pushMatrix();
               this.scene.scale(1,0.4,1);
-              this.myVehicleHelice_III.display();
+              this.scene.rotate(this.helixAng, 1,0,0);
+             this.myVehicleHelice_III.display();
             this.scene.popMatrix();
+
               this.scene.pushMatrix();
                 this.scene.rotate(Math.PI/2,1,0,0);
                 this.scene.scale(1,0.4,1);
+                this.scene.rotate(this.helixAng, 1,0,0);
+
                 this.myVehicleHelice_IV.display();
               this.scene.popMatrix();
         this.scene.popMatrix();
+
+//FIM DE HELICE
 
         this.appearanceRuder.apply();
         this.scene.pushMatrix();
@@ -234,12 +310,14 @@ this.scene.pushMatrix();
             this.scene.translate(0,1.75,-2.75);
             this.scene.rotate(Math.PI/2,1,0,0);
             this.scene.rotate(Math.PI/2,0,1,0);
+            this.scene.rotate(this.stabilizerAng, 1,0,0);
             this.myVehicleRudderTop.display();
           this.scene.popMatrix();
           this.scene.pushMatrix();
             this.scene.translate(0,-1.75,-2.75);
             this.scene.rotate(Math.PI/2,1,0,0);
             this.scene.rotate(Math.PI/2,0,1,0);
+            this.scene.rotate(this.stabilizerAng, 1,0,0);
             this.myVehicleRudderBot.display();
           this.scene.popMatrix();
         this.scene.popMatrix();

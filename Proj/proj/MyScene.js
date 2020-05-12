@@ -95,12 +95,17 @@ class MyScene extends CGFscene {
         this.setShininess(10.0);
     }
 
-    checkKeys(){
-       this.vehicle.update();
+    checkKeys(t){
+       this.vehicle.update(t);
        var text="Keys pressed: ";
        var keysPressed=false;
 
        //check for key codes
+       if(this.gui.isKeyPressed("KeyP")){
+                text +="P";
+                this.vehicle.startAutoPilot();
+                keysPressed = true;
+        }
        if(this.gui.isKeyPressed("KeyW")){
            text +="W";
            this.vehicle.accelerate(0.2*this.speedFactor);
@@ -128,7 +133,7 @@ class MyScene extends CGFscene {
        }
        if(keysPressed){
            console.log(text);
-           this.vehicle.update();
+           this.vehicle.update(t);
        }
 
    }
@@ -139,7 +144,7 @@ class MyScene extends CGFscene {
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
         //To be done...
-        this.checkKeys();
+        this.checkKeys(t);
     }
 
     selectedObject() {
@@ -149,9 +154,6 @@ class MyScene extends CGFscene {
     selectedTexture() {
 
           this.appearance.setTexture(this.textures[this.currentTexture]);
-
-
-
 
     }
 
@@ -165,14 +167,17 @@ class MyScene extends CGFscene {
         this.loadIdentity();
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
+        this.appearance.apply();
 
 
         // Draw axis
         if (this.displayAxis)
             this.axis.display();
 
-        if(this.currentTexture != -1)
+        if(this.currentTexture != -1){
           this.appearance.apply();
+        }
+
 
         //this.setDefaultAppearance();
 
@@ -190,6 +195,7 @@ class MyScene extends CGFscene {
 
         if(this.displayBox){
           this.scale(50,50,50);
+          this.appearance.apply();
           this.box.display();
         }
 
