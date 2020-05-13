@@ -51,6 +51,7 @@ class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.vehicle = new MyVehicle(this, 16, 20);
         this.box = new MyUnitCube(this);
+        this.terrain = new MyTerrain(this, 50, 50);
         this.objects=[
             new MySphere(this, 16, 8),
             new MyCylinder(this,6),
@@ -181,6 +182,8 @@ class MyScene extends CGFscene {
 
         //this.setDefaultAppearance();
 
+
+
         if(this.displayObjects){
             this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
             this.objects[this.currentObject].display();
@@ -194,10 +197,16 @@ class MyScene extends CGFscene {
         }
 
         if(this.displayBox){
+          this.pushMatrix();
+          this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
+          this.terrain.display();
+          this.popMatrix();
           this.scale(50,50,50);
           this.appearance.apply();
           this.box.display();
+
         }
+
 
 
         // ---- BEGIN Primitive drawing section

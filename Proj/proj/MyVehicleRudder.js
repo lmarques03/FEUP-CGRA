@@ -5,7 +5,7 @@ constructor(scene) {
 
   this.myTriangleSmall=new MyTriangleSmall(scene);
   this.myQuad=new MyQuad(scene);
-  
+
 
 }
 

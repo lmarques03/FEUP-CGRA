@@ -18,6 +18,7 @@ serialInclude(['../lib/CGF.js',
 'MyHalfSphere.js',
 'MyVehicleMotor.js',
 'MyVehicleCorpo.js',
+'MyTerrain.js',
 
 
 

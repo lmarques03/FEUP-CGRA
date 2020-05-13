@@ -223,6 +223,9 @@ class MyVehicle extends CGFobject {
       this.scene.rotate(this.angY*Math.PI/180.0, 0, 1, 0);
 
 
+//translate all objects
+this.scene.scale(0.25,0.25,0.25);
+this.scene.translate(0,10,0);
 
 this.scene.pushMatrix();
     this.appearanceCorpo.apply();
