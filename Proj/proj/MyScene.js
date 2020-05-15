@@ -52,6 +52,7 @@ class MyScene extends CGFscene {
         this.vehicle = new MyVehicle(this, 16, 20);
         this.box = new MyUnitCube(this);
         this.terrain = new MyTerrain(this, 50, 50);
+
         this.objects=[
             new MySphere(this, 16, 8),
             new MyCylinder(this,6),
@@ -97,7 +98,7 @@ class MyScene extends CGFscene {
     }
 
     checkKeys(t){
-       this.vehicle.update(t);
+      this.vehicle.update(t);
        var text="Keys pressed: ";
        var keysPressed=false;
 
@@ -144,8 +145,9 @@ class MyScene extends CGFscene {
 
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
-        //To be done...
         this.checkKeys(t);
+        this.vehicle.myFlag.update(t);
+
     }
 
     selectedObject() {
@@ -153,9 +155,7 @@ class MyScene extends CGFscene {
     }
 
     selectedTexture() {
-
           this.appearance.setTexture(this.textures[this.currentTexture]);
-
     }
 
     display() {
@@ -180,7 +180,7 @@ class MyScene extends CGFscene {
         }
 
 
-        //this.setDefaultAppearance();
+        this.setDefaultAppearance();
 
 
 
@@ -207,19 +207,5 @@ class MyScene extends CGFscene {
 
         }
 
-
-
-        // ---- BEGIN Primitive drawing section
-
-        //This sphere does not have defined texture coordinates
-        //this.incompleteSphere.display();
-
-
-
-        //this.myCylinder.display();
-
-
-
-        // ---- END Primitive drawing section
     }
 }

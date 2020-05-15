@@ -10,17 +10,11 @@ class MyVehicle extends CGFobject {
 
         // MyVehicle elements
         this.myVehicleCorpo=new MyVehicleCorpo(scene,16,8);
-        this.myVehicleMotorR=new MyVehicleCorpo(scene,16,8);
-        this.myVehicleMotorL=new MyVehicleCorpo(scene,16,8);
-        this.myVehicleRudderTop=new MyVehicleRudder(scene);
-        this.myVehicleRudderBot=new MyVehicleRudder(scene);
-        this.myVehicleRudderL=new MyVehicleRudder(scene);
-        this.myVehicleRudderR=new MyVehicleRudder(scene);
+        this.myVehicleMotor=new MyVehicleCorpo(scene,16,8);
+        this.myVehicleRudder=new MyVehicleRudder(scene);
         this.myVehicleGondola=new MyVehicleGondola(scene);
-        this.myVehicleHelice_I=new MyVehicleHelice(scene,16,8);;
-        this.myVehicleHelice_II=new MyVehicleHelice(scene,16,8);;
-        this.myVehicleHelice_III=new MyVehicleHelice(scene,16,8);;
-        this.myVehicleHelice_IV=new MyVehicleHelice(scene,16,8);;
+        this.myVehicleHelice=new MyVehicleHelice(scene,16,8);;
+        this.myFlag = new MyFlag(scene, 4, 2);
 
         this.angY=0;
         this.speed=0;
@@ -39,8 +33,8 @@ class MyVehicle extends CGFobject {
         this.pilotAngle = 0;
 
         this.previousTime = 0; //ms
-      this.deltaTime = 0; //seconds
-      this.angularSpeed = 360/5.0 * (Math.PI / 180); // formula: 360/animationTime
+        this.deltaTime = 0; //seconds
+        this.angularSpeed = 360/5.0 * (Math.PI / 180); // formula: 360/animationTime
     }
 
     initBuffers() {
@@ -142,13 +136,9 @@ class MyVehicle extends CGFobject {
 
         }
 
-
-
     }
 
     updateBuffers(complexity){
-
-
         //reinitialize buffers
         this.initBuffers();
         this.initNormalVizBuffers();
@@ -224,8 +214,12 @@ class MyVehicle extends CGFobject {
 
 
 //translate all objects
-this.scene.scale(0.25,0.25,0.25);
+this.scene.scale(0.75,0.75,0.75);
 this.scene.translate(0,10,0);
+//flag
+this.scene.pushMatrix();
+    this.myFlag.display();
+this.scene.popMatrix();
 
 this.scene.pushMatrix();
     this.appearanceCorpo.apply();
@@ -251,14 +245,14 @@ this.scene.pushMatrix();
         this.scene.pushMatrix();
         this.scene.translate(0.3,-2.25,-1);
         this.scene.scale(0.2,0.1,0.2);
-        this.myVehicleMotorL.display();
+        this.myVehicleMotor.display();
         this.scene.popMatrix();
 
 
         this.scene.pushMatrix();
         this.scene.translate(-0.3,-2.25,-1);
         this.scene.scale(0.2,0.1,0.2);
-        this.myVehicleMotorR.display();
+        this.myVehicleMotor.display();
         this.scene.popMatrix();
 
 //HELICE
@@ -272,14 +266,14 @@ this.scene.pushMatrix();
             this.scene.pushMatrix();
               this.scene.scale(1,0.4,1);
               this.scene.rotate(this.helixAng, 1,0,0);
-              this.myVehicleHelice_I.display();
+              this.myVehicleHelice.display();
             this.scene.popMatrix();
 
               this.scene.pushMatrix();
                 this.scene.rotate(Math.PI/2,1,0,0);
                 this.scene.scale(1,0.4,1);
                 this.scene.rotate(this.helixAng, 1,0,0);
-                this.myVehicleHelice_II.display();
+                this.myVehicleHelice.display();
               this.scene.popMatrix();
         this.scene.popMatrix();
 
@@ -292,15 +286,14 @@ this.scene.pushMatrix();
             this.scene.pushMatrix();
               this.scene.scale(1,0.4,1);
               this.scene.rotate(this.helixAng, 1,0,0);
-             this.myVehicleHelice_III.display();
+             this.myVehicleHelice.display();
             this.scene.popMatrix();
 
               this.scene.pushMatrix();
                 this.scene.rotate(Math.PI/2,1,0,0);
                 this.scene.scale(1,0.4,1);
                 this.scene.rotate(this.helixAng, 1,0,0);
-
-                this.myVehicleHelice_IV.display();
+              this.myVehicleHelice.display();
               this.scene.popMatrix();
         this.scene.popMatrix();
 
@@ -314,14 +307,14 @@ this.scene.pushMatrix();
             this.scene.rotate(Math.PI/2,1,0,0);
             this.scene.rotate(Math.PI/2,0,1,0);
             this.scene.rotate(this.stabilizerAng, 1,0,0);
-            this.myVehicleRudderTop.display();
+            this.myVehicleRudder.display();
           this.scene.popMatrix();
           this.scene.pushMatrix();
             this.scene.translate(0,-1.75,-2.75);
             this.scene.rotate(Math.PI/2,1,0,0);
             this.scene.rotate(Math.PI/2,0,1,0);
             this.scene.rotate(this.stabilizerAng, 1,0,0);
-            this.myVehicleRudderBot.display();
+            this.myVehicleRudder.display();
           this.scene.popMatrix();
         this.scene.popMatrix();
 
@@ -330,12 +323,12 @@ this.scene.pushMatrix();
           this.scene.pushMatrix();
             this.scene.translate(1.5,0,-3);
             this.scene.rotate(Math.PI/2,1,0,0);
-            this.myVehicleRudderR.display();
+            this.myVehicleRudder.display();
           this.scene.popMatrix()
           this.scene.pushMatrix();
             this.scene.translate(-1.5,0,-3);
             this.scene.rotate(Math.PI/2,1,0,0);
-            this.myVehicleRudderL.display();
+            this.myVehicleRudder.display();
           this.scene.popMatrix()
         this.scene.popMatrix();
 

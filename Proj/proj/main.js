@@ -19,6 +19,7 @@ serialInclude(['../lib/CGF.js',
 'MyVehicleMotor.js',
 'MyVehicleCorpo.js',
 'MyTerrain.js',
+'MyFlag.js',
 
 
 
