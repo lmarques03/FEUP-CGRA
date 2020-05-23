@@ -209,19 +209,20 @@ class MyVehicle extends CGFobject {
       this.scene.pushMatrix();
 
       //orientar a posiçao do veiculo
+      this.scene.scale(0.5,0.5,0.5)
       this.scene.translate(this.x, this.y, this.z);
       this.scene.rotate(this.angY*Math.PI/180.0, 0, 1, 0);
 
 
-//translate all objects
-this.scene.scale(0.75,0.75,0.75);
-this.scene.translate(0,10,0);
-//flag
-this.scene.pushMatrix();
-    this.myFlag.display();
-this.scene.popMatrix();
+    //translate all objects
+    this.scene.scale(0.75,0.75,0.75);
+    this.scene.translate(0,10,0);
+    //flag
+    this.scene.pushMatrix();
+        this.myFlag.display();
+    this.scene.popMatrix();
 
-this.scene.pushMatrix();
+    this.scene.pushMatrix();
     this.appearanceCorpo.apply();
     this.scene.pushMatrix();
     this.scene.scale(2,2,3);

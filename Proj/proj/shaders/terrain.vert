@@ -20,5 +20,5 @@ void main() {
 	vec4 colorMap = texture2D(uSamplerHeightMap, aTextureCoord);
 	verticalOffset.z = colorMap.b;
 
-	gl_Position = uPMatrix* uMVMatrix * vec4(aVertexPosition + verticalOffset * 16.0, 1.0);
+	gl_Position = uPMatrix* uMVMatrix * vec4(aVertexPosition + verticalOffset , 1.0);
 }

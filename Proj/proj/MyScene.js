@@ -24,7 +24,7 @@ class MyScene extends CGFscene {
 
         this.setUpdatePeriod(50);
 
-
+        this.nSuppliesDelivered = 0;
         this.enableTextures(true);
         this.appearance = new CGFappearance(this);
         this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
@@ -33,6 +33,11 @@ class MyScene extends CGFscene {
         this.appearance.setShininess(120);
         this.appearance.loadTexture('./images/cubemap.png');
         this.appearance.setTextureWrap('REPEAT','REPEAT');
+
+        this.supplies = [];
+                for(var i = 0; i < 5; i++){
+                    this.supplies.push(new MySupply(this));
+                }
 
         this.textures=[
             new CGFtexture(this, './images/earth.jpg'),
@@ -52,6 +57,7 @@ class MyScene extends CGFscene {
         this.vehicle = new MyVehicle(this, 16, 20);
         this.box = new MyUnitCube(this);
         this.terrain = new MyTerrain(this, 50, 50);
+        this.billboard=new MyBillboard(this, 2, 1);
 
         this.objects=[
             new MySphere(this, 16, 8),
@@ -86,7 +92,7 @@ class MyScene extends CGFscene {
 
 
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(100, 100, 100), vec3.fromValues(0, 0, 0));
     }
 
 
@@ -131,8 +137,22 @@ class MyScene extends CGFscene {
        if(this.gui.isKeyPressed("KeyR")){
            text +="R";
            this.vehicle.reset();
+           this.nSuppliesDelivered = 0;
            keysPressed = true;
        }
+       if(this.gui.isKeyPressed("KeyL")){//only one supply dropped at a time
+            text += "L";
+            if (this.nSuppliesDelivered != 5){
+
+                if((this.nSuppliesDelivered == 0) || (this.nSuppliesDelivered != 0 && (this.supplies[this.nSuppliesDelivered-1].previousTime == 0))){
+                    this.supplies[this.nSuppliesDelivered].drop(this.vehicle.x*0.5, this.vehicle.z*0.5);
+                    this.nSuppliesDelivered++;
+                    this.billboard.update();
+                }
+            }
+
+            keysPressed = true;
+        }
        if(keysPressed){
            console.log(text);
            this.vehicle.update(t);
@@ -147,6 +167,10 @@ class MyScene extends CGFscene {
     update(t){
         this.checkKeys(t);
         this.vehicle.myFlag.update(t);
+        this.billboard.update(t);
+        for(var i=0; i<5; i++){
+                this.supplies[i].update(t);
+            }
 
     }
 
@@ -183,15 +207,19 @@ class MyScene extends CGFscene {
         this.setDefaultAppearance();
 
 
-
         if(this.displayObjects){
             this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
             this.objects[this.currentObject].display();
           }
 
         if(this.displayVehicle){
+
+
             this.pushMatrix();
             this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
+            for(var i = 0; i < 5; i++){
+                 this.supplies[i].display();
+             }
             this.vehicle.display();
             this.popMatrix();
         }
@@ -199,7 +227,13 @@ class MyScene extends CGFscene {
         if(this.displayBox){
           this.pushMatrix();
           this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
-          this.terrain.display();
+
+          this.popMatrix();
+          this.pushMatrix();
+          this.billboard.display();
+            this.terrain.display();
+          this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
+
           this.popMatrix();
           this.scale(50,50,50);
           this.appearance.apply();

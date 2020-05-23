@@ -13,7 +13,7 @@ uniform mat4 uNMatrix;
 uniform float normScale;
 void main() {
   vTextureCoord = aTextureCoord;
-	vec3 offset=vec3(0.0,0.0,0.0);
+  vec3 offset=vec3(0.0,0.0,0.0);
   offset=aVertexNormal*normScale*0.1;
 
   float x = 1.0-aTextureCoord.x;

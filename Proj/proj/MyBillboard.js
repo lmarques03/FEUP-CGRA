@@ -9,12 +9,13 @@ class MyBillboard extends CGFobject {
         this.height = height;
         this.myBillboard = new MyPlane(this.scene, 20);
         this.mySupport=new MyCylinder(this.scene, 10);
+        this.nSuppliesDelivered = 0;
 
     }
 
     initShaders() {
         this.billboardShader = new CGFshader(this.scene.gl, "shaders/display.vert", "shaders/display.frag");
-
+        this.billboardShader.setUniformsValues({nSuppliesDelivered: 0});
         // this.billboardShader.setUniformsValues({canvasWidth: this.scene.gl.canvas.width });
         // this.billboardShader.setUniformsValues({canvasHeight:this.scene.gl.canvas.height });
 
@@ -41,14 +42,14 @@ class MyBillboard extends CGFobject {
 
 
     update(t) {
-    this.billboardShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+    this.billboardShader.setUniformsValues({nSuppliesDelivered: ++this.nSuppliesDelivered });
     }
 
 
     display() {
 
   this.scene.pushMatrix();
-    this.scene.translate(-2,-5,+18);
+    this.scene.translate(-2,-20,+18);
     this.scene.rotate(-Math.PI/5, 0, 1,0 );
 
 //ambos os suporte da bandeeira
